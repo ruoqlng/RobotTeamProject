@@ -80,9 +80,4 @@ def backward_by_encoders(inches, speed, stop_action):
     """ Calls forward_by_encoders with negative speeds to achieve backward motion. """
 
 
-#test_forward_backward()
-def main():
-    ev3.forward_seconds(5, 100)
-
-
-main()
+test_forward_backward()
