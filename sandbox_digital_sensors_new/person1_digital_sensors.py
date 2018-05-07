@@ -7,11 +7,11 @@ Person 1: ev3.TouchSensor
 Person 2: ev3.Button
 Person 3: ev3.RemoteControl
 
-Authors: David Fisher, David Mutchler and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+Authors: David Fisher, David Mutchler and Bowen Li.
+"""  # Done: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 # -----------------------------------------------------------------------------
-# TODO: 2.  WITH YOUR INSTRUCTOR, discuss the "big picture" of this project,
+# Done: 2.  WITH YOUR INSTRUCTOR, discuss the "big picture" of this project,
 #           as described in the   _README_FIRST.txt   file.
 #
 # When your   ** ENTIRE TEAM ** understands that:
@@ -106,9 +106,15 @@ def print_state_of_touch_sensor(n, seconds_per_print):
        2. SLEEPs for the given number of seconds.
     """
     # -------------------------------------------------------------------------
-    # TODO: 3.  Implement and test this function.
+    # Done: 3.  Implement and test this function.
     #           Tests have been written for you (above).
     # -------------------------------------------------------------------------
+    TS = ev3.TouchSensor()
+    assert TS
+    for k in range(n):
+        time.sleep(seconds_per_print)
+        print(TS.is_pressed)
+
 
 
 def run_test_wait_for_press():
@@ -143,6 +149,7 @@ def run_test_wait_for_press():
 
 def wait_for_press():
     """
+
     Constructs an ev3.TouchSensor object.
     Then repeatedly:
        1. Gets the STATE of the touch sensor
@@ -151,9 +158,17 @@ def wait_for_press():
        2. Sleeps for a small amount (say, 0.05 seconds).
     """
     # -------------------------------------------------------------------------
-    # TODO: 4.  Implement and test this function.
+    # Done: 4.  Implement and test this function.
     #           Tests have been written for you (above).
     # -------------------------------------------------------------------------
+    TS = ev3.TouchSensor()
+    assert TS
+    while True:
+        time.sleep(0.05)
+        if TS.is_pressed == 1:
+            break
+
+
 
 
 def run_test_show_images():
@@ -220,6 +235,11 @@ def show_images(list_of_images):
     Type hints:
       :type list_of_images: []
     """
+    Sc = ev3.Screen()
+    TS = ev3.TouchSensor()
+    while True:
+        time.sleep(0.05)
+
 
 
 # -----------------------------------------------------------------------------
