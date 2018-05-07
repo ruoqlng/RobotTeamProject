@@ -201,7 +201,7 @@ def wait_for_RED_DOWN_button_press():
 def run_test_make_sounds():
     """ Tests the   make_sounds   function. """
     print()
-    print('---------------------------------------------------')
+    print('--------------------------------------------------')
     print('Testing the   make_sounds   function:')
     print('--------------------------------------------------')
 
