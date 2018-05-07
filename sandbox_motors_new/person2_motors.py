@@ -31,7 +31,7 @@ def test_spin_left_spin_right():
     print("--------------------------------------------")
     print("spin_left_seconds")
     print("--------------------------------------------")
-    ev3.Sound.speak("spin left seconds is now initiating").wait()
+    ev3.Sound.speak("Albert's codes are now initiating").wait()
 
     seconds = 1  # Any value other than 0.
     while seconds != 0:
@@ -43,24 +43,39 @@ def test_spin_left_spin_right():
         print("type in speed = 0, seconds = 0, and stop_action = brake to enter next stage")
         print("--------------------------------------------")
     print("spin_left_seconds done!")
-    ev3.Sound.speak("Entering next stage").wait()
+
 
     print("--------------------------------------------")
     print("spin_left_by_time")
     print("--------------------------------------------")
-    ev3.Sound.speak("spin left by time is now initiating").wait()
+
+
+    degrees = 1  # Any value other than 0.
+    while degrees != 0:
+        degrees = int(input("Enter a degrees for spining : "))
+        speed = int(input("Enter a speed for the motor (-100 to 100 dps)(CANNOT BE ZERO!!!): "))
+        stop_action = input('Enter the stop_action: ')
+        spin_left_by_time(degrees, speed, stop_action)
+        print("--------------------------------------------")
+        print("type in degrees = 0, speed = 1, and stop_action = brake to enter next stage")
+        print("--------------------------------------------")
+    print("spin_left_by_time done!")
+
+    print("--------------------------------------------")
+    print("spin_left_by_encoders")
+    print("--------------------------------------------")
 
     degrees = 1  # Any value other than 0.
     while degrees != 0:
         degrees = int(input("Enter a degrees for spining : "))
         speed = int(input("Enter a speed for the motor (-100 to 100 dps): "))
         stop_action = input('Enter the stop_action: ')
-        spin_left_by_time(degrees, speed, stop_action)
+        spin_left_by_encoders(degrees, speed, stop_action)
         print("--------------------------------------------")
         print("type in degrees = 0, speed = 0, and stop_action = brake to enter next stage")
         print("--------------------------------------------")
-    print("spin left by time!")
-    ev3.Sound.speak("Entering next stage").wait()
+    print("spin_left_by_encoders done!")
+
 
 def spin_left_seconds(seconds, speed, stop_action):
     """
@@ -99,13 +114,13 @@ def spin_left_by_time(degrees, speed, stop_action):
     assert left_motor.connected
     assert right_motor.connected
 
-    degrees_in_motor = 4.5 * degrees
-    time = degrees_in_motor/(abs(speed)*9)
+    degrees_in_motor = 4.8 * degrees
+    seconds = degrees_in_motor/(abs(speed)*9)
 
     left_motor.run_forever(speed_sp=-speed * 9, stop_action=stop_action)
     right_motor.run_forever(speed_sp=speed * 9, stop_action=stop_action)
 
-    time.sleep(time)
+    time.sleep(seconds)
 
     left_motor.stop()
     right_motor.stop()
@@ -118,15 +133,54 @@ def spin_left_by_encoders(degrees, speed, stop_action):
       1. Compute the number of degrees the wheels should spin to achieve the desired distance.
       2. Move until the computed number of degrees is reached.
     """
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
 
+    assert left_motor.connected
+    assert right_motor.connected
+
+    degrees_in_motor = 4.8 * degrees
+
+    left_motor.run_to_rel_pos(position_sp=-degrees_in_motor,speed_sp=speed*9,stop_action=stop_action)
+    right_motor.run_to_rel_pos(position_sp=degrees_in_motor,speed_sp=speed*9,stop_action=stop_action)
+
+    left_motor.stop()
+    right_motor.stop()
 
 def spin_right_seconds(seconds, speed, stop_action):
     """ Calls spin_left_seconds with negative speeds to achieve spin_right motion. """
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
 
+    assert left_motor.connected
+    assert right_motor.connected
+
+    left_motor.run_forever(speed_sp=-speed * 9, stop_action=stop_action)
+    right_motor.run_forever(speed_sp=speed * 9, stop_action=stop_action)
+
+    time.sleep(seconds)
+
+    left_motor.stop()
+    right_motor.stop()
 
 def spin_right_by_time(degrees, speed, stop_action):
     """ Calls spin_left_by_time with negative speeds to achieve spin_right motion. """
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
 
+    assert left_motor.connected
+    assert right_motor.connected
+
+    degrees_in_motor = 4.8 * degrees
+    seconds = degrees_in_motor / (abs(speed) * 9)
+
+    left_motor.run_forever(speed_sp=-speed * 9, stop_action=stop_action)
+    right_motor.run_forever(speed_sp=speed * 9, stop_action=stop_action)
+
+    time.sleep(seconds)
+
+    left_motor.stop()
+    right_motor.stop()
 
 def spin_right_by_encoders(degrees, speed, stop_action):
     """ Calls spin_left_by_encoders with negative speeds to achieve spin_right motion. """
