@@ -1,6 +1,6 @@
 """
 Functions for moving the robot FORWARD and BACKWARD.
-Authors: David Fisher, David Mutchler and ruoqing.
+Authors: David Fisher, David Mutchler and Ruoqing Ouyang.
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 # DONE: 2. Implment forward_seconds, then the relevant part of the test function.
