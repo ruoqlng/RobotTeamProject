@@ -141,8 +141,8 @@ def spin_left_by_encoders(degrees, speed, stop_action):
 
     degrees_in_motor = 4.8 * degrees
 
-    left_motor.run_to_rel_pos(position_sp=-degrees_in_motor,speed_sp=speed*9,stop_action=stop_action)
-    right_motor.run_to_rel_pos(position_sp=degrees_in_motor,speed_sp=speed*9,stop_action=stop_action)
+    left_motor.run_to_abs_pos(position_sp=-degrees_in_motor, speed_sp=speed*9, stop_action=stop_action)
+    right_motor.run_to_abs_pos(position_sp=degrees_in_motor, speed_sp=speed*9, stop_action=stop_action)
 
     left_motor.stop()
     right_motor.stop()
