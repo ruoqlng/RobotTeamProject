@@ -14,7 +14,7 @@ Author: David Fisher.
 # use the screen you can't just run it via SSH like normal.  You instead have 2 options:
 #  chmod +x this file on the EV3 by using the SSH command chmod +x m4_e (hit tab for the rest), then run it via Brickman
 #  Temporarily stop Brickman while working on this module, then resume Brickman once complete.
-#  Stop via       sudo chvt 6
+#  Stop via       sudo chvt 6 C$$E120
 #  Restart later  sudo chvt 1
 # Personally I prefer to stop Brickman and use SSH but either option works.  By doing it the chvt way you get some logs.
 #
