@@ -19,7 +19,7 @@ Author: David Fisher.
 # Personally I prefer to stop Brickman and use SSH but either option works.  By doing it the chvt way you get some logs.
 #
 # Once the program m4_ev3_petals_on_a_rose.py is running on EV3, open m4_pc_petals_on_a_rose.py.
-# Don't look at any other code in this file (that's cheating in this game).
+# Don't look at any other code in this file (that's cheating in this game)..
 
 import ev3dev.ev3 as ev3
 import time
