@@ -48,10 +48,22 @@ class Snatch3r(object):
         self.left_motor.run_forever(speed_sp=-left_speed)
         self.right_motor.run_forever(speed_sp=right_speed)
 
-
     def right(self,left_speed,right_speed):
         self.left_motor.run_forever(speed_sp=left_speed)
         self.right_motor.run_forever(speed_sp=-right_speed)
+
+    def arm_calibration(self):
+        self.arm_motor.run_forever(speed_sp=100)
+        while not self.touch_sensor.is_pressed:
+            time.sleep(0.01)
+        self.arm_motor.stop(stop_action="brake")
+        ev3.Sound.beep().wait()
+        arm_revolutions_for_full_range = 14.2 * 360
+        self.arm_motor.run_to_rel_pos(position_sp=-arm_revolutions_for_full_range, speed_sp=MAX_SPEED,
+                                      stop_action=ev3.Motor.STOP_ACTION_BRAKE)
+        self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        ev3.Sound.beep().wait()
+        self.arm_motor.position = 0
 
     def arm_up(self):
         self.arm_motor.run_forever(speed_sp=900)
@@ -66,7 +78,6 @@ class Snatch3r(object):
         self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=900)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep()
-
 
     def loop_forever(self):
         # This is a convenience method that I don't really recommend for most programs other than m5.
@@ -84,4 +95,10 @@ class Snatch3r(object):
         self.right_motor.stop(stop_action='brake')
         self.arm_motor.stop(stop_action='brake')
         self.running = False
+        ev3.Leds.set_color(ev3.Leds.LEFT, ev3.Leds.GREEN)
+        ev3.Leds.set_color(ev3.Leds.RIGHT, ev3.Leds.GREEN)
+        print("Goodbye!")
+        ev3.Sound.speak("Goodbye").wait()
+
+
 
