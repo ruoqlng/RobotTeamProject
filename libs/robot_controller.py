@@ -53,13 +53,13 @@ class Snatch3r(object):
         self.right_motor.run_forever(speed_sp=-right_speed)
 
     def arm_calibration(self):
-        self.arm_motor.run_forever(speed_sp=100)
+        self.arm_motor.run_forever(speed_sp=900)
         while not self.touch_sensor.is_pressed:
             time.sleep(0.01)
         self.arm_motor.stop(stop_action="brake")
         ev3.Sound.beep().wait()
         arm_revolutions_for_full_range = 14.2 * 360
-        self.arm_motor.run_to_rel_pos(position_sp=-arm_revolutions_for_full_range, speed_sp=MAX_SPEED,
+        self.arm_motor.run_to_rel_pos(position_sp=-arm_revolutions_for_full_range, speed_sp=900,
                                       stop_action=ev3.Motor.STOP_ACTION_BRAKE)
         self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()

@@ -87,9 +87,9 @@ def main():
     #   Channel 3's .on_red_up should call handle_red_up_3 (that exist already) with state and dc as parameters
     #   Channel 4's .on_red_up should call handle_red_up_4 (that exist already) with state and dc as parameters
 
-    rc2 = ev3.RemoteControl(channel = 2)
-    rc3 = ev3.RemoteControl(channel = 3)
-    rc4 = ev3.RemoteControl(channel = 4)
+    rc2 = ev3.RemoteControl(channel=2)
+    rc3 = ev3.RemoteControl(channel=3)
+    rc4 = ev3.RemoteControl(channel=4)
     rc2.on_red_up = lambda state: handle_red_up_2(state, dc)
     rc3.on_red_up = lambda state: handle_red_up_3(state, dc)
     rc4.on_red_up = lambda state: handle_red_up_4(state, dc)
@@ -98,10 +98,10 @@ def main():
     btn.on_backspace = lambda state: handle_shutdown(state, dc)
 
     while dc.running:
-        # TODO: 4. Call the .process() method on your channel 1 RemoteControl object, then review and run your code.
+        # DONE: 4. Call the .process() method on your channel 1 RemoteControl object, then review and run your code.
         #   Review the handle functions below to see how they draw to the screen.  They are already finished.
         rc1.process()
-        # TODO: 6. Call the .process() method on your channel 2 - 4 RemoteControl objects and demo your code.
+        # DONE: 6. Call the .process() method on your channel 2 - 4 RemoteControl objects and demo your code.
         #   Review the handle functions below to see how they draw to the screen.  They are already finished.
         rc2.process()
         rc3.process()

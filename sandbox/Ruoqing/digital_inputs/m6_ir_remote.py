@@ -58,7 +58,7 @@ def main():
     robot = robo.Snatch3r()
     dc = DataContainer()
 
-    # TODO: 4. Add the necessary IR handler callbacks as per the instructions above.
+    # DONE: 4. Add the necessary IR handler callbacks as per the instructions above.
     # Remote control channel 1 is for driving the crawler tracks around (none of these functions exist yet below).
     # Remote control channel 2 is for moving the arm up and down (all of these functions already exist below).
 
@@ -84,7 +84,7 @@ def main():
         btn.process()
         time.sleep(0.01)
 
-    # TODO: 2. Have everyone talk about this problem together then pick one  member to modify libs/robot_controller.py
+    # DONE: 2. Have everyone talk about this problem together then pick one  member to modify libs/robot_controller.py
     # as necessary to implement the method below as per the instructions in the opening doc string. Once the code has
     # been tested and shown to work, then have that person commit their work.  All other team members need to do a
     # VCS --> Update project...
@@ -99,39 +99,39 @@ def main():
 # DONE: 6. Implement the IR handler callbacks handlers.
 
 
-def handle_right_motor_forward(robot,state):
+def handle_right_motor_forward(robot, state):
     if state:
-        robot.right_motor.run_forever(600)
+        robot.right_motor.run_forever(speed_sp=600)
         ev3.Leds.set_color(ev3.Leds.RIGHT,ev3.Leds.GREEN)
     else:
-        robot.right_motor.stop()
+        robot.right_motor.stop(stop_action='brake')
         ev3.Leds.set_color(ev3.Leds.RIGHT,ev3.Leds.BLACK)
 
 
-def handle_right_motor_backward(robot,state):
+def handle_right_motor_backward(robot, state):
     if state:
-        robot.right_motor.run_forever(-600)
+        robot.right_motor.run_forever(speed_sp=-600)
         ev3.Leds.set_color(ev3.Leds.RIGHT,ev3.Leds.RED)
     else:
-        robot.right_motor.stop()
+        robot.right_motor.stop(stop_action='brake')
         ev3.Leds.set_color(ev3.Leds.RIGHT,ev3.Leds.BLACK)
 
 
-def handle_left_motor_forward(robot,state):
+def handle_left_motor_forward(robot, state):
     if state:
         robot.left_motor.run_forever(speed_sp=600)
         ev3.Leds.set_color(ev3.Leds.LEFT,ev3.Leds.GREEN)
     else:
-        robot.left_motor.stop()
+        robot.left_motor.stop(stop_action='brake')
         ev3.Leds.set_color(ev3.Leds.LEFT,ev3.Leds.BLACK)
 
 
-def handle_left_motor_backward(robot,state):
+def handle_left_motor_backward(robot, state):
     if state:
         robot.left_motor.run_forever(speed_sp=-600)
         ev3.Leds.set_color(ev3.Leds.LEFT,ev3.Leds.RED)
     else:
-        robot.left_motor.stop()
+        robot.left_motor.stop(stop_action='brake')
         ev3.Leds.set_color(ev3.Leds.LEFT,ev3.Leds.BLACK)
 # TODO: 7. When your program is complete, call over a TA or instructor to sign your checkoff sheet and do a code review.
 #
