@@ -24,25 +24,64 @@ class Snatch3r(object):
     def __init__(self):
         self.left_motor=ev3.LargeMotor(ev3.OUTPUT_B)
         self.right_motor=ev3.LargeMotor(ev3.OUTPUT_C)
+        self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
+        self.touch_sensor = ev3.TouchSensor()
 
         assert self.left_motor.connected
         assert self.right_motor.connected
+        assert self.arm_motor.connected
+        assert self.touch_sensor
 
-    def forward(self,inches,speed,stop_action='brake'):
-        k = 360/4.5
-        degrees=k*inches
-        self.left_motor.run_to_rel_pos(position_sp=degrees, speed_sp=8*speed,stop_action=stop_action)
-        self.right_motor.run_to_rel_pos(position_sp=degrees, speed_sp=8*speed,stop_action=stop_action)
-        self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+    def forward(self,left_speed,right_speed):
+        self.left_motor.run_forever(speed_sp=left_speed)
+        self.right_motor.run_forever(speed_sp=right_speed)
 
-    def backward(self,inches,speed,stop_action='brake'):
-        k = 360/4.5
-        degrees = k * inches
-        self.left_motor.run_to_rel_pos(position_sp=degrees, speed_sp=8 * speed, stop_action=stop_action)
-        self.right_motor.run_to_rel_pos(position_sp=degrees, speed_sp=8 * speed, stop_action=stop_action)
-        self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
-        self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+    def back(self,left_speed,right_speed):
+        self.left_motor.run_forever(speed_sp=-left_speed)
+        self.right_motor.run_forever(speed_sp=-right_speed)
+
+    def stop(self):
+        self.left_motor.stop(stop_action='brake')
+        self.right_motor.stop(stop_action='brake')
+
+    def left(self,left_speed,right_speed):
+        self.left_motor.run_forever(speed_sp=-left_speed)
+        self.right_motor.run_forever(speed_sp=right_speed)
 
 
+    def right(self,left_speed,right_speed):
+        self.left_motor.run_forever(speed_sp=left_speed)
+        self.right_motor.run_forever(speed_sp=-right_speed)
+
+    def arm_up(self):
+        self.arm_motor.run_forever(speed_sp=900)
+        while True:
+            time.sleep(0.01)
+            if self.touch_sensor.is_pressed == 1:
+                break
+        self.arm_motor.stop(stop_action='brake')
+        ev3.Sound.beep()
+
+    def arm_down(self):
+        self.arm_motor.run_to_abs_pos(position_sp=0, speed_sp=900)
+        self.arm_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        ev3.Sound.beep()
+
+
+    def loop_forever(self):
+        # This is a convenience method that I don't really recommend for most programs other than m5.
+        #   This method is only useful if the only input to the robot is coming via mqtt.
+        #   MQTT messages will still call methods, but no other input or output happens.
+        # This method is given here since the concept might be confusing.
+        self.running = True
+        while self.running:
+            time.sleep(0.1)  # Do nothing (except receive MQTT messages) until an MQTT message calls shutdown.
+
+    def shutdown(self):
+        # Modify a variable that will allow the loop_forever method to end. Additionally stop motors and set LEDs green.
+        # The most important part of this method is given here, but you should add a bit more to stop motors, etc.
+        self.left_motor.stop(stop_action='brake')
+        self.right_motor.stop(stop_action='brake')
+        self.arm_motor.stop(stop_action='brake')
+        self.running = False
 

@@ -35,6 +35,7 @@ def main():
     # Done: 2. Setup an mqtt_client.  Notice that since you don't need to receive any messages you do NOT need to have
     # a MyDelegate class.  Simply construct the MqttClient with no parameter in the constructor (easy).
     mqtt_client = com.MqttClient()
+    mqtt_client.connect_to_ev3()
 
     root = tkinter.Tk()
     root.title("MQTT Remote")
@@ -54,7 +55,7 @@ def main():
     right_speed_entry.insert(0, "600")
     right_speed_entry.grid(row=1, column=2)
 
-    # TODO: 3. Implement the callbacks for the drive buttons. Set both the click and shortcut key callbacks.
+    # Done: 3. Implement the callbacks for the drive buttons. Set both the click and shortcut key callbacks.
     #
     # To help get you started the arm up and down buttons have been implemented.
     # You need to implement the five drive buttons.  One has been writen below to help get you started but is commented
@@ -69,25 +70,25 @@ def main():
     left_button = ttk.Button(main_frame, text="Left")
     left_button.grid(row=3, column=0)
     # left_button and '<Left>' key
-    forward_button['command'] = lambda: left(mqtt_client, left_speed_entry, right_speed_entry)
+    left_button['command'] = lambda: left(mqtt_client, left_speed_entry, right_speed_entry)
     root.bind('<Left>', lambda event: left(mqtt_client, left_speed_entry, right_speed_entry))
 
     stop_button = ttk.Button(main_frame, text="Stop")
     stop_button.grid(row=3, column=1)
     # stop_button and '<space>' key (note, does not need left_speed_entry, right_speed_entry)
-    forward_button['command'] = lambda: stop(mqtt_client, left_speed_entry, right_speed_entry)
-    root.bind('<space>', lambda event: stop(mqtt_client, left_speed_entry, right_speed_entry))
+    stop_button['command'] = lambda: stop(mqtt_client)
+    root.bind('<space>', lambda event: stop(mqtt_client))
 
     right_button = ttk.Button(main_frame, text="Right")
     right_button.grid(row=3, column=2)
     # right_button and '<Right>' key
-    forward_button['command'] = lambda: right(mqtt_client, left_speed_entry, right_speed_entry)
+    right_button['command'] = lambda: right(mqtt_client, left_speed_entry, right_speed_entry)
     root.bind('<Right>', lambda event: right(mqtt_client, left_speed_entry, right_speed_entry))
 
     back_button = ttk.Button(main_frame, text="Back")
     back_button.grid(row=4, column=1)
     # back_button and '<Down>' key
-    forward_button['command'] = lambda: back(mqtt_client, left_speed_entry, right_speed_entry)
+    back_button['command'] = lambda: back(mqtt_client, left_speed_entry, right_speed_entry)
     root.bind('<Down>', lambda event: back(mqtt_client, left_speed_entry, right_speed_entry))
 
     up_button = ttk.Button(main_frame, text="Up")
@@ -115,22 +116,27 @@ def main():
 # ----------------------------------------------------------------------
 # Tkinter callbacks
 # ----------------------------------------------------------------------
-# TODO: 4. Implement the functions for the drive button callbacks.
+# Done: 4. Implement the functions for the drive button callbacks.
 def forward(mqtt_client, left_speed_entry, right_speed_entry):
-    mqtt_client.send_message('drive_forever',[int(left_speed_entry.get()),int(right_speed_entry.get())])
+    print('forward')
+    mqtt_client.send_message('forward',[int(left_speed_entry.get()),int(right_speed_entry.get())])
 
 def left(mqtt_client, left_speed_entry, right_speed_entry):
-    mqtt_client.send_message('drive_forever', [-int(left_speed_entry.get()), int(right_speed_entry.get())])
+    print('left')
+    mqtt_client.send_message('left', [int(left_speed_entry.get()), int(right_speed_entry.get())])
 
 def right(mqtt_client, left_speed_entry, right_speed_entry):
-    mqtt_client.send_message('drive_forever',[int(left_speed_entry.get()),-int(right_speed_entry.get())])
+    print('right')
+    mqtt_client.send_message('right',[int(left_speed_entry.get()),int(right_speed_entry.get())])
 
-def stop(mqtt_client, left_speed_entry, right_speed_entry):
-    mqtt_client.send_message('drive_forever',[0,0])
+def stop(mqtt_client):
+    print('stop')
+    mqtt_client.send_message('stop')
 
 def back(mqtt_client, left_speed_entry, right_speed_entry):
-    mqtt_client.send_message('drive_forever',[-int(left_speed_entry.get()),-int(right_speed_entry.get())])
-# TODO: 5. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.  This is the final one!
+    print('back')
+    mqtt_client.send_message('back',[int(left_speed_entry.get()),int(right_speed_entry.get())])
+# Done: 5. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.  This is the final one!
 #
 # Observations you should make, you did basically this same program using the IR Remote, but your computer can be a
 # remote control that can do A LOT more than an IR Remote.  We are just doing the basics here.
