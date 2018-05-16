@@ -41,7 +41,7 @@ def main():
             ev3.Sound.beep().wait()
             ev3.Sound.speak('I am trying to beep').wait()
             time.sleep(1)
-            ev3.Sound.beep()
+            ev3.Sound.beep().wait()
             break
 
 
