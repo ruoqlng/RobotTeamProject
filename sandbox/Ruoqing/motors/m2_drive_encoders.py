@@ -7,13 +7,43 @@ You will now use a run_to_rel_pos command to implement the action drive inches a
 Authors: David Fisher and Ruoqing Ouyang.
 """  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
-# TODO: 2. Copy the contents of your m1_drive_timed.py and paste that text into this file below these comments.
+# DONE: 2. Copy the contents of your m1_drive_timed.py and paste that text into this file below these comments.
 #   If your program says and prints anything at the start change it to print and say "Drive using encoders"
+import ev3dev.ev3 as ev3
+import time
 
-# TODO: 3. Add a beep after the drive motors stop (see code below).  Test your code to hear the beep AFTER movement.
-#   ev3.Sound.beep().wait()
+# DONE: 3. Add a beep after the drive motors stop (see code below).  Test your code to hear the beep AFTER movement.
 
-# TODO: 4. Instead of using the run_forever, time.sleep, stop pattern switch to using the run_to_rel_pos command.
+
+def main():
+    print("--------------------------------------------")
+    print("  Drive using input")
+    print("--------------------------------------------")
+    ev3.Sound.speak("Drive using input").wait()
+
+    left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+    right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
+
+    assert left_motor.connected
+    assert right_motor.connected
+
+    time_s = 1
+    while time_s != 0:
+        position_sp = int(input("distance to travel (inches): ")) * 90
+        speed_sp = int(input("Enter a speed (0 to 900 dps):"))
+        left_motor.run_to_rel_pos(position_sp, speed_sp, stop_action='brake')
+        right_motor.run_to_rel_pos(position_sp, speed_sp, stop_action='brake')
+        ev3.Sound.beep().wait()
+        ev3.Sound.beep().wait()
+        left_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+        ev3.Sound.beep().wait()
+
+    print("Goodbye!")
+    ev3.Sound.speak("Goodbye").wait()
+
+
+# DONE: 4. Instead of using the run_forever, time.sleep, stop pattern switch to using the run_to_rel_pos command.
 #   You will need to determine the position_sp value to pass into the run_to_rel_pos command as a named argument.
 #   Assume the diameter of the wheel is 1.3" (close enough).  A 1.3" diameter wheel results in approximately a 4"
 #     circumference, so 360 degrees = 4 inches of travel.
@@ -29,9 +59,9 @@ Authors: David Fisher and Ruoqing Ouyang.
 #        -- speed_sp
 #        -- stop_action
 
-# TODO: 5. Make sure the beep happens AFTER the motors stop.  Use the wait_while command to block code execution.
+# DONE: 5. Make sure the beep happens AFTER the motors stop.  Use the wait_while command to block code execution.
 
-# TODO: 6. Formally test your work. When you think you have the problem complete run these tests:
+# DONE: 6. Formally test your work. When you think you have the problem complete run these tests:
 #   200 dps 24 inches (make sure it drives within 2 inches of the target distance)
 #   400 dps 24 inches (make sure it drives within 2 inches of the target distance)
 #   800 dps 24 inches (make sure it drives within 2 inches of the target distance)

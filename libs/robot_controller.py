@@ -22,8 +22,8 @@ class Snatch3r(object):
     # Done: Implement the Snatch3r class as needed when working the sandox exercises
     # (and delete these comments)
     def __init__(self):
-        self.left_motor=ev3.LargeMotor(ev3.OUTPUT_B)
-        self.right_motor=ev3.LargeMotor(ev3.OUTPUT_C)
+        self.left_motor = ev3.LargeMotor(ev3.OUTPUT_B)
+        self.right_motor = ev3.LargeMotor(ev3.OUTPUT_C)
         self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
         self.touch_sensor = ev3.TouchSensor()
         self.color_sensor = ev3.ColorSensor()
@@ -36,7 +36,6 @@ class Snatch3r(object):
         assert self.touch_sensor.connected
         assert self.color_sensor.connected
         assert self.ir_sensor.connected
-
 
     def forward(self,left_speed,right_speed):
         self.left_motor.run_forever(speed_sp=left_speed)
