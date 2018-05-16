@@ -14,7 +14,7 @@ If the user presses the Left  button, the robot drives until the robot gets to B
 If the user presses the Right button, the robot drives until the robot gets to White.
 
 Authors: David Fisher and Bowen Li.
-"""  # Done: 1. PUT YOUR NAME IN THE ABOVE LINE.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -53,12 +53,20 @@ def main():
     ev3.Sound.speak("Drive to the color").wait()
     print("Press Back to exit this program.")
 
+    ev3.ColorSensor.COLOR_BLACK = 1
+    ev3.ColorSensor.COLOR_BLUE = 2
+    ev3.ColorSensor.COLOR_GREEN = 3
+    ev3.ColorSensor.COLOR_YELLOW = 4
+    ev3.ColorSensor.COLOR_RED = 5
+    ev3.ColorSensor.COLOR_WHITE = 6
+    ev3.ColorSensor.COLOR_BROWN = 7
+
     robot = robo.Snatch3r()
     dc = DataContainer()
 
     # For our standard shutdown button.
     btn = ev3.Button()
-    # Done: 2. Uncomment the lines below to setup event handlers for these buttons.
+    # DONE: 2. Uncomment the lines below to setup event handlers for these buttons.
     btn.on_up = lambda state: drive_to_color(state, robot, ev3.ColorSensor.COLOR_RED)
     btn.on_down = lambda state: drive_to_color(state, robot, ev3.ColorSensor.COLOR_BLUE)
     btn.on_left = lambda state: drive_to_color(state, robot, ev3.ColorSensor.COLOR_BLACK)
@@ -88,20 +96,18 @@ def drive_to_color(button_state, robot, color_to_seek):
     """
     if button_state:
         ev3.Sound.speak("Seeking " + COLOR_NAMES[color_to_seek]).wait()
+        # robot.color_sensor = ev3.ColorSensor()
+        # assert robot.color_sensor
+        robot.forward(600, 600)
+        while (robot.color_sensor.color != color_to_seek):
+            time.sleep(0.01)
+        robot.stop()
 
-        # Done: 3. Implement the task as stated in this module's initial comment block
+        # DONE: 3. Implement the task as stated in this module's initial comment block
         # It is recommended that you add to your Snatch3r class's constructor the color_sensor, as shown
-        robot.color_sensor = ev3.ColorSensor()
-        assert robot.color_sensor
+        # self.color_sensor = ev3.ColorSensor()
+        # assert self.color_sensor
         # Then here you can use a command like robot.color_sensor.color to check the value
-        robot.forward(600,600)
-        while True:
-            if robot.color_sensor.color == color_to_seek:
-                robot.stop()
-                ev3.Sound.speak('Found' + COLOR_NAMES[color_to_seek]).wait()
-                break
-
-
 
         # TODO: 4. Call over a TA or instructor to sign your team's checkoff sheet.
         #
