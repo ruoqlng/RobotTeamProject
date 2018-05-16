@@ -40,6 +40,7 @@ def main():
         if robot.pixy.value(3)>0:
             ev3.Sound.beep().wait()
             ev3.Sound.speak('I am trying to beep').wait()
+            time.sleep(1)
             ev3.Sound.beep()
             break
 
