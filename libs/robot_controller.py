@@ -36,7 +36,6 @@ class Snatch3r(object):
         assert self.touch_sensor.connected
         assert self.color_sensor.connected
         assert self.ir_sensor.connected
-        assert self.beacon_seeker.connected
 
 
     def forward(self,left_speed,right_speed):
@@ -124,7 +123,7 @@ class Snatch3r(object):
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
 
-    def beacon_seeking(self):
+    def seek_beacon(self):
         forward_speed = 300
         turn_speed = 100
 
