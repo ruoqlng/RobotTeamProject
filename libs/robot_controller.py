@@ -29,7 +29,9 @@ class Snatch3r(object):
         self.color_sensor = ev3.ColorSensor()
         self.ir_sensor = ev3.InfraredSensor()
         self.beacon_seeker = ev3.BeaconSeeker(channel=1)
+        self.pixy = ev3.Sensor(driver_name="pixy-lego")
 
+        assert self.pixy
         assert self.left_motor.connected
         assert self.right_motor.connected
         assert self.arm_motor.connected
@@ -127,8 +129,8 @@ class Snatch3r(object):
         turn_speed = 100
 
         while not self.touch_sensor.is_pressed:
-            current_heading = 0  # use the beacon_seeker heading
-            current_distance = 0  # use the beacon_seeker distance
+            current_heading = self.beacon_seeker.heading  # use the beacon_seeker heading
+            current_distance = self.beacon_seeker.distance  # use the beacon_seeker distance
             if current_distance == -128:
                 # If the IR Remote is not found just sit idle for this program until it is moved.
                 print("IR Remote not found. Distance is -128")
