@@ -53,6 +53,10 @@ def main():
     ev3.Sound.speak("Drive to the color").wait()
     print("Press Back to exit this program.")
 
+    ev3.ColorSensor.COLOR_RED = 5
+    ev3.ColorSensor.COLOR_BLUE = 2
+    ev3.ColorSensor.COLOR_BLACK = 1
+    ev3.ColorSensor.COLOR_WHITE = 6
     robot = robo.Snatch3r()
     dc = DataContainer()
 
@@ -64,6 +68,7 @@ def main():
     btn.on_left = lambda state: drive_to_color(state, robot, ev3.ColorSensor.COLOR_BLACK)
     btn.on_right = lambda state: drive_to_color(state, robot, ev3.ColorSensor.COLOR_WHITE)
     btn.on_backspace = lambda state: handle_shutdown(state, dc)
+
 
     while dc.running:
         btn.process()
@@ -94,15 +99,15 @@ def drive_to_color(button_state, robot, color_to_seek):
         #   self.color_sensor = ev3.ColorSensor()
         #   assert self.color_sensor
         # Then here you can use a command like robot.color_sensor.color to check the value
-        robot.forward(50, 50)
 
         time_s = 1  # Any value other than 0.
         while time_s != 0:
             robot.forward(100,100)
             if robot.color_sensor.color == color_to_seek:
                 robot.stop()
+                break
 
-        # TODO: 4. Call over a TA or instructor to sign your team's checkoff sheet.
+        # TODO: 4 . Call over a TA or instructor to sign your team's checkoff sheet.
         #
         # Observations you should make, the instance variable robot.color_sensor.color is always updating
         # to the color seen and that value is given to you as an int.

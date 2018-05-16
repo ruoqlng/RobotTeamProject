@@ -38,6 +38,7 @@ class Snatch3r(object):
         assert self.touch_sensor.connected
         assert self.color_sensor.connected
         assert self.ir_sensor.connected
+        assert self.pixy
 
     def forward(self,left_speed,right_speed):
         self.left_motor.run_forever(speed_sp=left_speed)
