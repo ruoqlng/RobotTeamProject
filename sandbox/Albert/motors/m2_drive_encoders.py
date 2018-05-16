@@ -29,12 +29,14 @@ def main():
 
     time_s = 1  # Any value other than 0.
     while time_s != 0:
-        position_sp = int(input("distance to travel (inches): ")) * 90
-        speed_sp = int(input("Enter a speed (0 to 900 dps):"))
-        left_motor.run_to_rel_pos(position_sp, speed_sp,stop_action='brake')
-        right_motor.run_to_rel_pos(position_sp, speed_sp,stop_action='brake')
-        ev3.Sound.beep().wait()
-        ev3.Sound.beep().wait()
+        position = int(input("distance to travel (inches): ")) * 90
+        if position == 0:
+            break
+        speed = int(input("Enter a speed (0 to 900 dps):"))
+        if speed == 0:
+            break
+        left_motor.run_to_rel_pos(position_sp=position, speed_sp=speed)
+        right_motor.run_to_rel_pos(position_sp=position, speed_sp=speed)
         left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         right_motor.wait_while(ev3.Motor.STATE_RUNNING)
         ev3.Sound.beep().wait()
@@ -75,5 +77,5 @@ def main():
 # TODO: 7. Call over a TA or instructor to sign your team's checkoff sheet and do a code review.
 #
 # Observations you should make, run_to_rel_pos is easier to use since it uses encoders that are independent of speed.
-
+main()
 

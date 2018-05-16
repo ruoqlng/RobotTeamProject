@@ -85,7 +85,11 @@ def main():
     time_s = 1  # Any value other than 0.
     while time_s != 0:
         speed_sp =  int(input("Enter a speed for the motor (0 to 900 dps): "))
+        if speed_sp == 0:
+            break
         distance = int(input("Enter a distance to drive (inches): "))
+        if distance == 0:
+            break
         distance_sp = distance/0.0111
         time_s = distance_sp/speed_sp
         left_motor.run_forever(speed_sp=speed_sp)

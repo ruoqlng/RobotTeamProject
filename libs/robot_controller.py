@@ -103,9 +103,9 @@ class Snatch3r(object):
         ev3.Sound.speak("Goodbye").wait()
 
     def drive_inches(self,inches_target, speed_deg_per_second):
-        position_sp = inches_target*90
-        self.left_motor.run_to_rel_pos(position_sp, speed_sp=speed_deg_per_second,stop_action='brake')
-        self.right_motor.run_to_rel_pos(position_sp, speed_sp=speed_deg_per_second,stop_action='brake')
+        position = inches_target*90
+        self.left_motor.run_to_rel_pos(position_sp=position, speed_sp=speed_deg_per_second,stop_action='brake')
+        self.right_motor.run_to_rel_pos(position_sp=position, speed_sp=speed_deg_per_second,stop_action='brake')
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
 
