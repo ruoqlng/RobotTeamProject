@@ -37,7 +37,7 @@ def main():
         # Then here you can use a command like width = robot.pixy.value(3)
         print("(x,y)=({},{}) width={} height={}".format(robot.pixy.value(1), robot.pixy.value(2),
                                                         robot.pixy.value(3), robot.pixy.value(4)))
-        if width > 0:
+        if robot.pixy.value(3) > 0:
             ev3.Sound.beep()
             time.sleep(0.1)
 
