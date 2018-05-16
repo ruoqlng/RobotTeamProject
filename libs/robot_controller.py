@@ -27,12 +27,14 @@ class Snatch3r(object):
         self.arm_motor = ev3.MediumMotor(ev3.OUTPUT_A)
         self.touch_sensor = ev3.TouchSensor()
         self.color_sensor = ev3.ColorSensor()
+        self.ir_sensor = ev3.InfraredSensor()
 
         assert self.left_motor.connected
         assert self.right_motor.connected
         assert self.arm_motor.connected
         assert self.touch_sensor
         assert self.color_sensor
+        assert self.ir_sensor
 
     def forward(self,left_speed,right_speed):
         self.left_motor.run_forever(speed_sp=left_speed)
@@ -118,3 +120,43 @@ class Snatch3r(object):
         self.right_motor.run_to_rel_pos(position_sp=-degrees_to_turn * 470 / 90,speed_sp=turn_speed_sp,stop_action='brake')
         self.left_motor.wait_while(ev3.Motor.STATE_RUNNING)
         self.right_motor.wait_while(ev3.Motor.STATE_RUNNING)
+
+    def beacon_seeking(self):
+        forward_speed = 300
+        turn_speed = 100
+
+        while not self.touch_sensor.is_pressed:
+            current_heading = 0  # use the beacon_seeker heading
+            current_distance = 0  # use the beacon_seeker distance
+            if current_distance == -128:
+                # If the IR Remote is not found just sit idle for this program until it is moved.
+                print("IR Remote not found. Distance is -128")
+                self.stop()
+            else:
+                if math.fabs(current_heading) < 2:
+                    print("On the right heading. Distance: ", current_distance)
+                    if current_distance == 0:
+                        print("You have found the beacon!")
+                        self.stop()
+                        time.sleep(0.01)
+                        return True
+                    if current_distance > 0:
+                        print("Drive forward")
+                        self.forward(forward_speed, forward_speed)
+                if 10 > math.fabs(current_heading) >= 2:
+                    print("Adjusting heading: ", current_heading)
+                    if current_heading < 0:
+                        print("Spin left")
+                        self.left(turn_speed, turn_speed)
+                    if current_heading > 0:
+                        print("Spin right")
+                        self.right(turn_speed, turn_speed)
+                if math.fabs(current_heading) > 10:
+                    print("Heading is too far off to fix", current_heading)
+                    self.stop()
+                    time.sleep(0.01)
+
+            time.sleep(0.2)
+        print("Abandon ship!")
+        self.stop()
+        return False
