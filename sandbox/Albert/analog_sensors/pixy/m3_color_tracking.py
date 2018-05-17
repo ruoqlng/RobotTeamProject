@@ -39,12 +39,12 @@ def main():
         #   If the Pixy x value is between 150 and 170 stop the robot
         # Continuously track the color until the touch sensor is pressed to end the program.
         if robot.pixy.value(1)<150:
-            robot.left(-turn_speed, turn_speed)
+            robot.left(turn_speed, turn_speed)
         if robot.pixy.value(1)>170:
-            robot.right(turn_speed, -turn_speed)
+            robot.right(turn_speed, turn_speed)
         if robot.pixy.value(1)>150:
             if robot.pixy.value(1)<170:
-             robot.stop()
+             robot.forward(turn_speed,turn_speed)
         if robot.pixy.value(1) == 0:
             robot.stop()
 
