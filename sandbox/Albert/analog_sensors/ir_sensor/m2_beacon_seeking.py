@@ -22,9 +22,9 @@ import robot_controller as robo
 
 def main():
     print("--------------------------------------------")
-    print(" Beacon seeking")
+    print(" Jellifish seeking")
     print("--------------------------------------------")
-    ev3.Sound.speak("Beacon seeking")
+    ev3.Sound.speak("Jellyfish seeking")
 
     robot = robo.Snatch3r()
     try:
@@ -34,9 +34,9 @@ def main():
 
             # TODO: 5. Save the result of the seek_beacon function (a bool), then use that value to only say "Found the
             # beacon" if the return value is True.  (i.e. don't say "Found the beacon" if the attempts was cancelled.)
-                ev3.Sound.speak("Found the beacon")
+                ev3.Sound.speak("Found the Jellyfish")
 
-            command = input("Hit enter to seek the beacon again or enter q to quit: ")
+            command = input("Hit enter to seek the jellyfish again or enter q to quit: ")
             if command == "q":
                 break
     except:
@@ -70,7 +70,7 @@ def seek_beacon(robot):
         current_distance = BeaconSeeker.distance  # use the beacon_seeker distance
         if current_distance == -128:
             # If the IR Remote is not found just sit idle for this program until it is moved.
-            print("IR Remote not found. Distance is -128")
+            print("Jellyfish not found. Distance is -128")
             robot.stop()
         else:
             # DONE: 4. Implement the following strategy to find the beacon.

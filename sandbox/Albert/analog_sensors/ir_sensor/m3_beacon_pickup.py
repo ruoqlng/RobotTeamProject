@@ -29,9 +29,9 @@ import robot_controller as robo
 
 def main():
     print("--------------------------------------------")
-    print(" Beacon pickup")
+    print(" Jellyfish pickup")
     print("--------------------------------------------")
-    ev3.Sound.speak("Beacon pickup").wait()
+    ev3.Sound.speak("Jellyfish pickup").wait()
 
     #####################################################
     # There are no TODOs in this code.
@@ -46,11 +46,11 @@ def main():
                 if found_beacon:
                     break
             if found_beacon:
-                ev3.Sound.speak("I got the beacon")
+                ev3.Sound.speak("I got the Jellyfish")
                 robot.arm_up()
                 time.sleep(1)
                 robot.arm_down()
-            command = input("Hit enter to seek the beacon again or enter q to quit: ")
+            command = input("Hit enter to seek the Jellyfish again or enter q to quit: ")
             if command == "q":
                 break
     except:

@@ -14,7 +14,7 @@
 import ev3dev.ev3 as ev3
 import math
 import time
-
+import traceback
 
 class Snatch3r(object):
     """Commands for the Snatch3r robot that might be useful in many different programs."""
@@ -164,3 +164,48 @@ class Snatch3r(object):
         print("Abandon ship!")
         self.stop()
         return False
+
+    def jellyfish(self,speed):
+        ev3.Sound.speak('Let Us Get Jellyfish Patrick').wait()
+        turn_speed = speed
+        while not self.touch_sensor.is_pressed:
+            print("value1: X", self.pixy.value(1))
+            print("value2: Y", self.pixy.value(2))
+
+            self.forward(speed,speed)
+
+            if self.pixy.value(3) > 0:
+                self.turn_degrees(90,turn_speed)
+                time.sleep(1)
+                ev3.Sound.beep().wait()
+
+            time.sleep(0.25)
+
+        ev3.Sound.speak("Jellyfish pickup").wait()
+
+        #####################################################
+        # There are no TODOs in this code.
+        # Your only edits will be in the Snatch3r class.
+        #####################################################
+
+        try:
+            while True:
+                while True:
+                    found_beacon = self.seek_beacon()
+                    if found_beacon:
+                        break
+                if found_beacon:
+                    ev3.Sound.speak("I got the Jellyfish")
+                    self.arm_up()
+                    time.sleep(1)
+                    self.arm_down()
+                command = input("Hit enter to seek the Jellyfish again or enter q to quit: ")
+                if command == "q":
+                    break
+        except:
+            traceback.print_exc()
+            ev3.Sound.speak("Error")
+
+        print("Goodbye!")
+        ev3.Sound.speak("Goodbye").wait()
+
