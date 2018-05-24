@@ -35,11 +35,11 @@ def main():
         # Print the values (much like the print_pixy_readings example)
         width = robot.pixy.value(3)
         height = robot.pixy.value(4)
-        centerx = robot.pixy.value(1)
-        centery = robot.pixy.value(2)
+        x = robot.pixy.value(1)
+        y = robot.pixy.value(2)
         # TODO: 4. Send the Pixy values to the PC by calling the on_rectangle_update method
         # If you open m2_pc_pixy_display you can see the parameters for that method [x, y, width, height]
-
+        mqtt_client.send_message("on_rectangle_update", [x, y, width, height])
 
 
 
