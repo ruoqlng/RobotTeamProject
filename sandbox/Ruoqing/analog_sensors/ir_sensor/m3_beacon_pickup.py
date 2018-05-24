@@ -29,9 +29,9 @@ import robot_controller as robo
 
 def main():
     print("--------------------------------------------")
-    print(" Beacon pickup")
+    print(" Say hi to Patrick")
     print("--------------------------------------------")
-    ev3.Sound.speak("Beacon pickup").wait()
+    ev3.Sound.speak("Hi Patrick").wait()
 
     #####################################################
     # There are no TODOs in this code.
@@ -43,11 +43,11 @@ def main():
         while True:
             found_beacon = robot.seek_beacon()
             if found_beacon:
-                ev3.Sound.speak("I got the beacon")
+                ev3.Sound.speak("Hi Patrick")
                 robot.arm_up()
                 time.sleep(1)
                 robot.arm_down()
-            command = input("Hit enter to seek the beacon again or enter q to quit: ")
+            command = input("Hit enter to find Patrick again or enter q to quit: ")
             if command == "q":
                 break
     except:
